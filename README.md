@@ -42,6 +42,7 @@ export default todoVar;
 
 ### src/components/TodoForm.tsx
 
+store에 있는 함수를 이용
 
 ```
 import { FC, useState } from "react";
@@ -69,5 +70,36 @@ const TodoForm: FC = () => {
 };
 
 export default TodoForm;
+
+```
+
+### src/components/TodoList.tsx
+
+전역 상태로써 useReactiveVar() Hook 사용
+
+```
+import { FC } from "react";
+
+import { useReactiveVar, useQuery } from "@apollo/client";
+
+import TodoItem from "./TodoItem";
+
+import todoVar from "../stores/todo";
+
+const TodoList: FC = () => {
+  
+  //이렇게 store의 반응변수를 todos에 할당하여 사용
+  const todos = useReactiveVar(todoVar);
+
+  return (
+    <section>
+      {todos.map((todo) => (
+        <TodoItem todo={todo} key={`todo_${todo.id}`} />
+      ))}
+    </section>
+  );
+};
+
+export default TodoList;
 
 ```
